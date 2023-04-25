@@ -18,8 +18,8 @@ model User {
   emailVerified  DateTime?
   image          String?
   hashedPassword String?
-  createdAt      DateTime? @default(now()) @db.Date
-  updatedAt      DateTime? @updatedAt @db.Date
+  createdAt      DateTime? @default(now())
+  updatedAt      DateTime? @updatedAt
   favoriteIds    String[]  @db.ObjectId
 
   accoutns     Account[]
@@ -71,7 +71,7 @@ model Reservation {
   startDate  DateTime
   endDate    DateTime
   totalPrice Int
-  createdAt  DateTime @default(now()) @db.Date
+  createdAt  DateTime @default(now())
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)

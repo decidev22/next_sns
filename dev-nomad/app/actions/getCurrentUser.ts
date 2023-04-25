@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import prisma from "@/app/libs/prismadb";
 
 export async function getSession() {
@@ -24,8 +24,14 @@ export default async function getCurrentUser() {
     if (!currentUser) {
       return null;
     }
-    return currentUser;
+
+    return {
+      ...currentUser,
+      createdAt: currentUser.createdAt!.toISOString(),
+      updatedAt: currentUser.updatedAt!.toISOString(),
+      emailVerified: currentUser.emailVerified?.toISOString() || null,
+    };
   } catch (error: any) {
-    return null; //Not throwing error here, it's not an API call, but only direct communication with my own server component
+    return null;
   }
 }
