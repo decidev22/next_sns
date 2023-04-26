@@ -8,6 +8,7 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import { SafeUser } from "@/app/types";
 import { signOut } from "next-auth/react";
+import useHostModal from "@/app/hooks/useHostModal";
 
 interface UserMenuProps {
   currentUser?: SafeUser | null;
@@ -21,12 +22,19 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  const hostModal = useHostModal();
+  const loggedIn = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+    // hostModal.onOpen();
+  }, [currentUser, loginModal]);
 
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
         <div
-          // onClick={() => {}}
+          onClick={loggedIn}
           className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:neutral-100 transition cursor-pointer"
         >
           {currentUser
@@ -54,7 +62,10 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                   onClick={() => {}}
                   label="My Reservations"
                 />
-                <MenuItem onClick={() => {}} label="Host Nomad" />
+                <MenuItem
+                  onClick={hostModal.onOpen}
+                  label="Host Nomad"
+                />
                 <MenuItem onClick={() => {}} label="Home" />
                 <hr />
                 <MenuItem onClick={() => signOut()} label="Logout" />
