@@ -3,8 +3,10 @@ import { Nunito } from "next/font/google";
 import Navbar from "./components/navbar/navbar";
 import RegisterModal from "./components/modals/RegisterModal";
 import ToasterProvider from "./components/providers/ToasterProvider";
+
 import LoginModal from "./components/modals/LoginModal";
 import getCurrentUser from "./actions/getCurrentUser";
+import HostModal from "./components/modals/HostModal";
 
 export const metadata = {
   title: "Dev Nomad",
@@ -28,6 +30,7 @@ export default async function RootLayout({
         <ToasterProvider />
         <LoginModal />
         <RegisterModal />
+        <HostModal />
         <Navbar currentUser={currentUser} />
         {children}
       </body>
