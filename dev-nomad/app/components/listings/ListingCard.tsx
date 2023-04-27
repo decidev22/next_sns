@@ -1,8 +1,8 @@
 "use client";
 
 import useCountries from "@/app/hooks/useCountries";
-import { SafeUser } from "@/app/types";
-import { Listing, Reservation } from "@prisma/client";
+import { SafeUser, safeListings } from "@/app/types";
+import { Reservation } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { format } from "date-fns";
@@ -17,7 +17,7 @@ interface ListingCard {
   onAction?: (id: string) => void;
   actionLabel?: string;
   actionId?: string;
-  data: Listing;
+  data: safeListings;
 }
 
 const ListingCard: React.FC<ListingCard> = ({
