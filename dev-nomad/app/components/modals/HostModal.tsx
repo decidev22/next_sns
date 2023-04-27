@@ -5,9 +5,15 @@ import { useMemo, useState } from "react";
 import Heading from "../Heading";
 import { categories } from "../navbar/Categories";
 import CategoryInput from "../Inputs/CategoryInput";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, useForm, SubmitHandler } from "react-hook-form";
 import CountrySelect from "../Inputs/CountrySelect";
 import dynamic from "next/dynamic";
+import Counter from "../Inputs/Counter";
+import ImageUpload from "../Inputs/ImageUpload";
+import Input from "../Inputs/Input";
+import axios from "axios";
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 enum STEPS {
   CATEGORY = 0,
@@ -19,8 +25,10 @@ enum STEPS {
 }
 
 const HostModal = () => {
+  const router = useRouter();
   const hostModal = useHostModal();
   const [step, setStep] = useState(STEPS.CATEGORY);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -35,9 +43,9 @@ const HostModal = () => {
       location: null,
       roomCount: 1,
       tableCount: 1,
-      guestCount: 1,
+      devCount: 1,
       imageSrc: "",
-      price: 1,
+      price: 0,
       title: "",
       description: "",
     },
@@ -45,6 +53,13 @@ const HostModal = () => {
 
   const category = watch("category");
   const location = watch("location");
+
+  const devCount = watch("devCount");
+  const roomCount = watch("roomCount");
+  const tableCount = watch("tableCount");
+
+  const imageSrc = watch("imageSrc");
+
   const Map = useMemo(
     () =>
       dynamic(() => import("../Map"), {
@@ -66,6 +81,29 @@ const HostModal = () => {
   const onNext = () => {
     setStep((value) => value + 1);
   };
+
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    if (step !== STEPS.PRICE) {
+      return onNext();
+    }
+    setIsLoading(true);
+    axios
+      .post("/api/listings", data)
+      .then(() => {
+        toast.success("New Nomad Created!");
+        router.refresh();
+        reset();
+        setStep(STEPS.CATEGORY);
+        hostModal.onClose();
+      })
+      .catch(() => {
+        toast.error("Something went wrong");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   const actionLabel = useMemo(() => {
     if (step === STEPS.PRICE) {
       return "Create";
@@ -118,12 +156,105 @@ const HostModal = () => {
       </div>
     );
 
+  if (step === STEPS.INFO)
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Share information about your Nomad"
+          subtitle="List amenities and facilities at your Nomad."
+        />
+        <Counter
+          title="Devs"
+          subtitle="How many Devs are coming?"
+          value={devCount}
+          onChange={(value) => setCustomValue("devCount", value)}
+        />
+        <hr />
+        <Counter
+          title="Rooms"
+          subtitle="How many Rooms do you have?"
+          value={roomCount}
+          onChange={(value) => setCustomValue("roomCount", value)}
+        />
+        <hr />
+        <Counter
+          title="Tables"
+          subtitle="How many tables do you have?"
+          value={tableCount}
+          onChange={(value) => setCustomValue("tableCount", value)}
+        />
+        <hr />
+      </div>
+    );
+
+  if (step === STEPS.IMAGES)
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Add photos of your place"
+          subtitle="Show devs what your workplace looks like."
+        />
+        <ImageUpload
+          value={imageSrc}
+          onChange={(value) => setCustomValue("imageSrc", value)}
+        />
+      </div>
+    );
+
+  if (step === STEPS.DESCRIPTION)
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="How would you describe this Nomad?"
+          subtitle="How would Devs like your place?"
+        />
+        <Input
+          id="title"
+          label="Title"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+        <hr />
+        <Input
+          id="description"
+          label="Description"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+        <hr />
+      </div>
+    );
+
+  if (step === STEPS.PRICE)
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="How much do you charge for your Nomad?"
+          subtitle="How much is it?"
+        />
+        <Input
+          id="price"
+          label="Price"
+          disabled={isLoading}
+          formatPrice
+          type="number"
+          register={register}
+          errors={errors}
+          required
+        />
+      </div>
+    );
+
   return (
     <Modal
       title="Host your Nomad!"
       isOpen={hostModal.isOpen}
       onClose={hostModal.onClose}
-      onSubmit={onNext}
+      onSubmit={handleSubmit(onSubmit)}
       actionLabel={actionLabel}
       body={bodyContent}
       secondaryActionLabel={secondaryActionLabel}
