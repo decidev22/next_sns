@@ -1,15 +1,20 @@
 "use client";
 
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import {
+  AiFillHeart,
+  AiFillSave,
+  AiOutlineHeart,
+  AiOutlineSave,
+} from "react-icons/ai";
 import { SafeUser } from "../types";
 import useFavorite from "../hooks/useFavorite";
 
-interface HeartButton {
+interface SaveButtonProps {
   listingId: string;
   currentUser?: SafeUser | null;
 }
 
-const HeartButton: React.FC<HeartButton> = ({
+const SaveButton: React.FC<SaveButtonProps> = ({
   listingId,
   currentUser,
 }) => {
@@ -23,19 +28,19 @@ const HeartButton: React.FC<HeartButton> = ({
       onClick={toggleFavorite}
       className="relative hover:opacity-80 transition cursor-pointer"
     >
-      <AiOutlineHeart
+      <AiOutlineSave
         size={28}
         className="fill-white absolute -top-[2px] -right-[2px]"
       />
 
-      <AiFillHeart
+      <AiFillSave
         size={24}
         className={
-          hasFavorited ? "fill-blue-500" : "fill-neutral-500/70"
+          hasFavorited ? "fill-blue-500" : "fill-neutral-300/80"
         }
       />
     </div>
   );
 };
 
-export default HeartButton;
+export default SaveButton;

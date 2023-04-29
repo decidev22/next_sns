@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
 import { format } from "date-fns";
 import Image from "next/image";
-import HeartButton from "../HeartButton";
+import SaveButton from "../SaveButton";
 import Button from "../Button";
 
 interface ListingCard {
@@ -64,7 +64,7 @@ const ListingCard: React.FC<ListingCard> = ({
   return (
     <div
       className="col-span-1 cursor-pointer group md:mt-2"
-      onClick={() => router.push("/listings/${data.id}")}
+      onClick={() => router.push(`/listings/${data.id}`)}
     >
       <div className="flex flex-col gap-2 w-full">
         <div className="aspect-square w-full relative overflow-hidden rounded-xl">
@@ -75,7 +75,7 @@ const ListingCard: React.FC<ListingCard> = ({
             fill
           />
           <div className="absolute top-3 right-3">
-            <HeartButton
+            <SaveButton
               listingId={data.id}
               currentUser={currentUser}
             />
