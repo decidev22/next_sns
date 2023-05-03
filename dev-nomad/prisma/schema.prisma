@@ -22,9 +22,11 @@ model User {
   updatedAt      DateTime? @updatedAt
   favoriteIds    String[]  @db.ObjectId
 
-  accoutns     Account[]
-  listings     Listing[]
-  reservations Reservation[]
+  accoutns           Account[]
+  listings           Listing[]
+  sharing            Sharing[]
+  reservations       Reservation[]
+  sharingReservation SharingReservation[]
 }
 
 model Account {
@@ -54,7 +56,7 @@ model Listing {
   createdAt     DateTime @default(now())
   category      String
   roomCount     Int
-  tableCount    Int //bathroomCount
+  tableCount    Int
   devCount      Int
   locationValue String
   userId        String   @db.ObjectId
@@ -75,4 +77,36 @@ model Reservation {
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   listing Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
+
+model SharingReservation {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @db.ObjectId
+  listingId  String   @db.ObjectId
+  startDate  DateTime
+  endDate    DateTime
+  totalPrice Int
+  createdAt  DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sharing Sharing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
+
+model Sharing {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+
+  imageSrc      String
+  createdAt     DateTime @default(now())
+  category      String
+  roomCount     Int
+  tableCount    Int
+  devCount      Int
+  locationValue String
+  userId        String   @db.ObjectId
+  price         Int
+
+  user               User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sharingReservation SharingReservation[]
 }

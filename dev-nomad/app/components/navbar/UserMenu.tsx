@@ -10,6 +10,7 @@ import { SafeUser } from "@/app/types";
 import { signOut } from "next-auth/react";
 import useHostModal from "@/app/hooks/useHostModal";
 import { useRouter } from "next/navigation";
+import useShareModal from "@/app/hooks/useShareModal";
 
 interface UserMenuProps {
   currentUser?: SafeUser | null;
@@ -24,6 +25,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const hostModal = useHostModal();
+  const shareModal = useShareModal();
   const loggedIn = useCallback(() => {
     if (!currentUser) {
       return loginModal.onOpen();
@@ -68,9 +70,18 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                   onClick={() => router.push("/reservations")}
                   label="Hosted Reservations"
                 />
+
                 <MenuItem
                   onClick={hostModal.onOpen}
                   label="Host Nomad"
+                />
+                {/* <MenuItem
+                  onClick={() => router.push("/shares")}
+                  label="Places You Shared"
+                /> */}
+                <MenuItem
+                  onClick={shareModal.onOpen}
+                  label="Share Nomad"
                 />
                 <MenuItem onClick={() => {}} label="Home" />
                 <hr />
