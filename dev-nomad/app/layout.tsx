@@ -9,6 +9,7 @@ import getCurrentUser from "./actions/getCurrentUser";
 import HostModal from "./components/modals/HostModal";
 import ShareModal from "./components/modals/ShareModal";
 import SearchModal from "./components/modals/SearchModal";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata = {
   title: "Dev Nomad",
@@ -35,6 +36,7 @@ export default async function RootLayout({
         <RegisterModal />
         <HostModal />
         <ShareModal />
+        <Analytics />
         <Navbar currentUser={currentUser} />
 
         <div className="pb-20 pt-28">{children}</div>
