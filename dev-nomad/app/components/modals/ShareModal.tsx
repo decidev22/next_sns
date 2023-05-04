@@ -88,12 +88,12 @@ const ShareModal = () => {
     }
     setIsLoading(true);
     axios
-      .post("/api/sharing", data)
-      .then(() => {
-        // First request succeeded
-        // Make another request
-        return axios.post("/api/listings", data);
-      })
+      .post("/api/listings", data)
+      // .then(() => {
+      //   // First request succeeded
+      //   // Make another request
+      //   return axios.post("/api/listings", data);
+      // })
       .then(() => {
         toast.success("A Nomad has been shared!");
         router.refresh();

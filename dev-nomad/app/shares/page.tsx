@@ -4,7 +4,6 @@ import ClientOnly from "@/app/components/CilientOnly";
 import EmptyState from "@/app/components/EmptyState";
 import SharingClient from "./ShareClient";
 import getReservation from "@/app/actions/getReservations";
-import getSharings from "../actions/getSharings";
 
 interface IParams {
   listingId?: string;
@@ -12,7 +11,7 @@ interface IParams {
 
 const SharingPage = async ({ params }: { params: IParams }) => {
   const listing = await getSharingById(params);
-  const reservation = await getSharings(params);
+  const reservation = await getReservation(params);
   const currentUser = await getCurrentUser();
   if (!listing) {
     return (
@@ -26,7 +25,7 @@ const SharingPage = async ({ params }: { params: IParams }) => {
       <SharingClient
         sharing={listing}
         currentUser={currentUser}
-        // reservation={reservation}
+        reservation={reservation}
       />
     </ClientOnly>
   );

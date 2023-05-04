@@ -83,10 +83,10 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                   label="Host Nomad"
                 />
 
-                {/* <MenuItem
+                <MenuItem
                   onClick={() => router.push("/shares")}
                   label="Places You Shared"
-                /> */}
+                />
                 <MenuItem
                   onClick={shareModal.onOpen}
                   label="Share Nomad"
