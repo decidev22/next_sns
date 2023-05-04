@@ -6,8 +6,8 @@ import {
   GiMountaintop,
   GiHills,
   GiIsland,
-} from "react-icons/Gi";
-import { BsHouses } from "react-icons/Bs";
+} from "react-icons/gi";
+import { BsHouses } from "react-icons/bs";
 import { IoCafeOutline, IoDiamond } from "react-icons/io5";
 import CategoryBox from "../CategoryBox";
 import { usePathname, useSearchParams } from "next/navigation";
