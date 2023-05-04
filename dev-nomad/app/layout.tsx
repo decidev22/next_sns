@@ -8,6 +8,7 @@ import LoginModal from "./components/modals/LoginModal";
 import getCurrentUser from "./actions/getCurrentUser";
 import HostModal from "./components/modals/HostModal";
 import ShareModal from "./components/modals/ShareModal";
+import SearchModal from "./components/modals/SearchModal";
 
 export const metadata = {
   title: "Dev Nomad",
@@ -30,6 +31,7 @@ export default async function RootLayout({
       <body className={font.className}>
         <ToasterProvider />
         <LoginModal />
+        <SearchModal />
         <RegisterModal />
         <HostModal />
         <ShareModal />
