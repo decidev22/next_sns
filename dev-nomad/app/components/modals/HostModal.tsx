@@ -121,7 +121,7 @@ const HostModal = () => {
   let bodyContent = (
     <div className="flex flex-col gap-8">
       <Heading
-        title="Which of these options best describes your Nomad?"
+        title="Which of these options best describes the Nomad?"
         subtitle="Choose a category"
       />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[50vh] overflow-y-auto">
@@ -145,8 +145,8 @@ const HostModal = () => {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
-          title="Where is your Nomad located?"
-          subtitle="Help your Devs to find you!"
+          title="Where is the Nomad located?"
+          subtitle="Help other Devs to find this place!"
         />
         <CountrySelect
           onChange={(value) => setCustomValue("location", value)}
@@ -160,8 +160,8 @@ const HostModal = () => {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
-          title="Share information about your Nomad"
-          subtitle="List amenities and facilities at your Nomad."
+          title="Share information about the Nomad"
+          subtitle="To your best knowledge, list amenities and facilities at the Nomad."
         />
         <Counter
           title="Devs"
@@ -191,7 +191,7 @@ const HostModal = () => {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
-          title="Add photos of your place"
+          title="Add photos of the nomad"
           subtitle="Show devs what your workplace looks like."
         />
         <ImageUpload
@@ -205,12 +205,12 @@ const HostModal = () => {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
-          title="How would you describe this Nomad?"
-          subtitle="How would Devs like your place?"
+          title="Address of the Nomad?"
+          subtitle="If you host this place, leave a contact detail in the detail and full-disclosure on costs."
         />
         <Input
           id="title"
-          label="Title"
+          label="Address"
           disabled={isLoading}
           register={register}
           errors={errors}
@@ -233,8 +233,8 @@ const HostModal = () => {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
-          title="How much do you charge for your Nomad?"
-          subtitle="How much is it?"
+          title="How much do you need to spend on this Nomad?"
+          subtitle="An average cost it takes to work from this location."
         />
         <Input
           id="price"
@@ -251,7 +251,7 @@ const HostModal = () => {
 
   return (
     <Modal
-      title="Host your Nomad!"
+      title="Host | Share a Nomad!"
       isOpen={hostModal.isOpen}
       onClose={hostModal.onClose}
       onSubmit={handleSubmit(onSubmit)}

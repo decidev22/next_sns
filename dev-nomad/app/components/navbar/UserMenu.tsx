@@ -63,7 +63,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
               <>
                 <MenuItem
                   onClick={() => router.push("/journey")}
-                  label="My Journey"
+                  label="My nomad plan"
                 />
                 <MenuItem
                   onClick={() => router.push("/favorites")}
@@ -71,26 +71,26 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                 />
                 <MenuItem
                   onClick={() => router.push("/reservations")}
-                  label="Hosted Reservations"
+                  label="Reservations on your Nomad"
                 />
                 <MenuItem
                   onClick={() => router.push("/properties")}
-                  label="My Properties"
+                  label="My Nomads"
                 />
 
                 <MenuItem
                   onClick={hostModal.onOpen}
-                  label="Host Nomad"
+                  label="Host | Share Nomad"
                 />
 
-                <MenuItem
+                {/* <MenuItem
                   onClick={() => router.push("/shares")}
                   label="Places You Shared"
                 />
                 <MenuItem
                   onClick={shareModal.onOpen}
                   label="Share Nomad"
-                />
+                /> */}
                 <MenuItem
                   onClick={() => router.push("/")}
                   label="Home"
